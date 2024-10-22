@@ -1,4 +1,4 @@
-package com.projectea.projectea.config;
+package com.projectea.projectea.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
