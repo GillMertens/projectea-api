@@ -1,8 +1,11 @@
 package com.projectea.projectea.domain.impl.category.entities;
 
+import com.projectea.projectea.domain.impl.item.entities.Item;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Set;
 
 @Entity
 @Getter
@@ -13,4 +16,6 @@ public class Category {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @OneToMany(mappedBy = "category")
+    private Set<Item> items;
 }

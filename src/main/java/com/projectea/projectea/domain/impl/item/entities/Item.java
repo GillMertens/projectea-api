@@ -1,8 +1,11 @@
 package com.projectea.projectea.domain.impl.item.entities;
+import com.projectea.projectea.domain.impl.category.entities.Category;
 import com.projectea.projectea.domain.impl.category.entities.Condition;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Set;
 
 @Entity
 @Getter
@@ -22,6 +25,7 @@ public class Item {
     private Condition condition;
     @Column(name = "price")
     private double price;
-    @Column(name = "category")
-    private String category;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 }
