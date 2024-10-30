@@ -2,11 +2,16 @@ package com.projectea.projectea.domain.impl.reservation.entities;
 
 import com.projectea.projectea.domain.impl.item.entities.Item;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
+@Table(name = "reservations")
+@Getter
+@Setter
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
