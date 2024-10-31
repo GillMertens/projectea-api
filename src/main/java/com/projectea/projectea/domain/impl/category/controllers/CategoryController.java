@@ -2,6 +2,12 @@ package com.projectea.projectea.domain.impl.category.controllers;
 
 import com.projectea.projectea.domain.impl.category.entities.Category;
 import com.projectea.projectea.domain.impl.category.services.CategoryServiceImpl;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -29,11 +35,6 @@ public class CategoryController {
     @PostMapping
     public Category createCategory(@RequestBody Category category) {
         return categoryService.createCategory(category);
-    }
-
-    @PutMapping(value = "/{id}")
-    public Category updateCategory(@PathVariable Long id, @RequestBody Category category) {
-        return categoryService.updateCategory(id, category);
     }
 
     @DeleteMapping(value = "/{id}")

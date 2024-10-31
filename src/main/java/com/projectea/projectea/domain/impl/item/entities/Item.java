@@ -1,7 +1,6 @@
 package com.projectea.projectea.domain.impl.item.entities;
 
 import com.projectea.projectea.domain.impl.category.entities.Category;
-import com.projectea.projectea.domain.impl.category.entities.Condition;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
