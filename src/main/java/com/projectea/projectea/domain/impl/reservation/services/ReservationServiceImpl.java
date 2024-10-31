@@ -2,7 +2,6 @@ package com.projectea.projectea.domain.impl.reservation.services;
 
 import com.projectea.projectea.domain.impl.reservation.entities.Reservation;
 import com.projectea.projectea.domain.impl.reservation.repositories.ReservationRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

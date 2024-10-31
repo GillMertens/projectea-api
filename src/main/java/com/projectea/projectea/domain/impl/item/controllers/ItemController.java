@@ -3,14 +3,21 @@ package com.projectea.projectea.domain.impl.item.controllers;
 
 import com.projectea.projectea.domain.impl.item.entities.Item;
 import com.projectea.projectea.domain.impl.item.services.ItemServiceImpl;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
 @RequestMapping(value = ItemController.BASE_URL)
 public class ItemController {
-    public static final String BASE_URL = "/api/v1/items";
+    public static final String BASE_URL = "/api/items";
     private final ItemServiceImpl itemService;
 
     public ItemController(ItemServiceImpl itemService) {
