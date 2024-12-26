@@ -2,6 +2,8 @@ package com.projectea.projectea.domain.impl.reservation.controllers;
 
 import com.projectea.projectea.domain.impl.reservation.entities.Reservation;
 import com.projectea.projectea.domain.impl.reservation.services.ReservationService;
+import com.projectea.projectea.domain.impl.reservation.services.ReservationServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,10 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/reservations")
 public class ReservationController {
-    private ReservationService reservationService;
+    private final ReservationServiceImpl reservationService;
 
     @GetMapping
     public ResponseEntity<List<Reservation>> getAllReservations() {

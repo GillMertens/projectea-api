@@ -2,14 +2,16 @@ package com.projectea.projectea.domain.impl.reservation.services;
 
 import com.projectea.projectea.domain.impl.reservation.entities.Reservation;
 import com.projectea.projectea.domain.impl.reservation.repositories.ReservationRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ReservationServiceImpl implements ReservationService {
-    private ReservationRepository reservationRepository;
+    private final ReservationRepository reservationRepository;
 
     @Override
     public List<Reservation> getAllReservations() {
