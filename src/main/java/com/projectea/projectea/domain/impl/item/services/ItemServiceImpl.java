@@ -22,6 +22,11 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    public List<Item> getItemsByCategory(String category) {
+        return itemRepository.findByCategoryName(category);
+    }
+
+    @Override
     public Item createItem(Item item) {
         return itemRepository.save(item);
     }
