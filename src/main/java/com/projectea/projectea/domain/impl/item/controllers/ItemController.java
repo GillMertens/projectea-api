@@ -20,7 +20,7 @@ import java.util.List;
 @RequestMapping(value = ItemController.BASE_URL)
 @RequiredArgsConstructor
 public class ItemController {
-    public static final String BASE_URL = "/api/items";
+    public static final String BASE_URL = "/api/v1/items";
     private final ItemServiceImpl itemService;
 
     @GetMapping

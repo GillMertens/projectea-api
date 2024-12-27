@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = CategoryController.BASE_URL)
 public class CategoryController {
-    public static final String BASE_URL = "/api/categories";
+    public static final String BASE_URL = "/api/v1/categories";
     private final CategoryServiceImpl categoryService;
 
     public CategoryController(CategoryServiceImpl categoryService) {
