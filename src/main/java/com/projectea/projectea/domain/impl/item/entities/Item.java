@@ -1,5 +1,6 @@
 package com.projectea.projectea.domain.impl.item.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.projectea.projectea.domain.impl.category.entities.Category;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -33,5 +34,6 @@ public class Item {
     private double price;
     @ManyToOne
     @JoinColumn(name = "category_id")
+    @JsonBackReference
     private Category category;
 }
