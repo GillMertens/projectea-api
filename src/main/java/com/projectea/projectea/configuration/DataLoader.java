@@ -47,17 +47,86 @@ public class DataLoader implements CommandLineRunner {
 
         // Create and save categories
         Category category1 = new Category();
-        category1.setName("Electronics");
+        category1.setName("Lighting");
         categoryRepository.save(category1);
 
+        Category category2 = new Category();
+        category2.setName("Audio");
+        categoryRepository.save(category2);
+
         // Create and save items
+        //Lighting category items
         Item item1 = new Item();
-        item1.setName("Laptop");
-        item1.setDescription("A high-performance laptop");
+        item1.setName("LED Light Panel");
+        item1.setDescription("A high-performance LED light panel");
         item1.setBrand("BrandX");
         item1.setCondition(Condition.NEW);
-        item1.setPrice(999.99);
+        item1.setPrice(49.99);
         item1.setCategory(category1);
         itemRepository.save(item1);
+
+        Item item2 = new Item();
+        item2.setName("Stage Light MX-1000");
+        item2.setDescription("A high-performance stage light");
+        item2.setBrand("BrandY");
+        item2.setCondition(Condition.USED);
+        item2.setPrice(199.99);
+        item2.setCategory(category1);
+        itemRepository.save(item2);
+
+        Item item3 = new Item();
+        item3.setName("LED Light Bulb");
+        item3.setDescription("A high-performance LED light bulb");
+        item3.setBrand("BrandZ");
+        item3.setCondition(Condition.NEW);
+        item3.setPrice(19.99);
+        item3.setCategory(category1);
+        itemRepository.save(item3);
+
+        Item item4 = new Item();
+        item4.setName("LED Light Strip");
+        item4.setDescription("A high-performance LED light strip");
+        item4.setBrand("BrandZ");
+        item4.setCondition(Condition.NEW);
+        item4.setPrice(29.99);
+        item4.setCategory(category1);
+        itemRepository.save(item4);
+
+        //Audio category items
+        Item item5 = new Item();
+        item5.setName("Blue Yeti USB Microphone");
+        item5.setDescription("A high quality USB microphone perfect for podcasting, streaming, and more");
+        item5.setBrand("Blue");
+        item5.setCondition(Condition.USED);
+        item5.setPrice(99.99);
+        item5.setCategory(category2);
+        itemRepository.save(item5);
+
+        Item item6 = new Item();
+        item6.setName("Audio-Technica ATH-M50x");
+        item6.setDescription("Professional studio monitor headphones");
+        item6.setBrand("Audio-Technica");
+        item6.setCondition(Condition.USED);
+        item6.setPrice(149.99);
+        item6.setCategory(category2);
+        itemRepository.save(item6);
+
+        Item item7 = new Item();
+        item7.setName("Focusrite Scarlett 2i2");
+        item7.setDescription("USB audio interface");
+        item7.setBrand("Focusrite");
+        item7.setCondition(Condition.USED);
+        item7.setPrice(159.99);
+        item7.setCategory(category2);
+        itemRepository.save(item7);
+
+        Item item8 = new Item();
+        item8.setName("Shure SM58");
+        item8.setDescription("Dynamic vocal microphone");
+        item8.setBrand("Shure");
+        item8.setCondition(Condition.USED);
+        item8.setPrice(99.99);
+        item8.setCategory(category2);
+        itemRepository.save(item8);
     }
 }
