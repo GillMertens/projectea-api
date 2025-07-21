@@ -14,3 +14,9 @@ spring:
     database: mysql
 server:
   port: 8080
+logging:
+  level:
+    org.springframework: ERROR
+jwt:
+  signing:
+    key: ${JWT_SIGNING_KEY}

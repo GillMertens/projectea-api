@@ -1,0 +1,11 @@
+services:
+  database:
+    image: mysql:9.3.0
+    container_name: projectea-database
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: projectea
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data/mysql:/var/lib/mysql
