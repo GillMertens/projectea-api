@@ -1,10 +1,10 @@
 package com.projectea.projectea.configuration;
 
-import io.github.cdimascio.dotenv.Dotenv;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +18,8 @@ import java.util.function.Function;
 @Service
 public class JwtTokenProvider {
 
-    private static final Dotenv dotenv = Dotenv.load();
-    private static final String JWT_SIGNING_KEY = dotenv.get("JWT_SIGNING_KEY");
+    @Value("${jwt.signing.key}")
+    private static String JWT_SIGNING_KEY;
 
     public String getUsername(String token) {
         return getClaimFromToken(token, Claims::getSubject);
@@ -60,8 +60,8 @@ public class JwtTokenProvider {
         return Jwts.parser()
                 .verifyWith(getPublicSigningKey())
                 .build()
-                .parseSignedClaims(token)
-                .getPayload();
+                .parseClaimsJws(token)
+                .getBody();
     }
 
     private SecretKey getPublicSigningKey() {
