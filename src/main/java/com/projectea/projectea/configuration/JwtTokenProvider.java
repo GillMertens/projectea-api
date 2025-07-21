@@ -60,8 +60,8 @@ public class JwtTokenProvider {
         return Jwts.parser()
                 .verifyWith(getPublicSigningKey())
                 .build()
-                .parseClaimsJws(token)
-                .getBody();
+                .parseSignedClaims(token)
+                .getPayload();
     }
 
     private SecretKey getPublicSigningKey() {
