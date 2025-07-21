@@ -19,6 +19,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category getCategoryById(Long id) {
+        Category category = categoryRepository.findById(id).orElse(null);
+        assert category != null;
+        System.out.println(category.getName());
         return categoryRepository.findById(id).orElse(null);
     }
 
