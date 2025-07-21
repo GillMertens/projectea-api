@@ -1,4 +1,4 @@
-package com.projectea.projectea.configuration;
+package com.projectea.projectea.configuration.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

@@ -1,4 +1,4 @@
-package com.projectea.projectea.configuration;
+package com.projectea.projectea.configuration.security;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
