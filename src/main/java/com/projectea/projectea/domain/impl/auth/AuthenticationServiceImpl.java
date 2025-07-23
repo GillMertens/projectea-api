@@ -1,14 +1,13 @@
 package com.projectea.projectea.domain.impl.auth;
 
-import com.projectea.projectea.configuration.JwtTokenProvider;
+import com.projectea.projectea.configuration.security.JwtTokenProvider;
 import com.projectea.projectea.domain.impl.user.entities.Role;
 import com.projectea.projectea.domain.impl.user.entities.User;
 import com.projectea.projectea.domain.impl.user.repositories.UserRepository;
-import com.projectea.projectea.exceptions.UserEmailAlreadyExistsException;
+import com.projectea.projectea.exceptions.EmailAlreadyExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +32,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public AuthenticationResponse register(RegisterRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new UserEmailAlreadyExistsException("A user with this email already exists");
+            throw new EmailAlreadyExistsException("A user with this email already exists");
         }
         var user = User.builder()
             .firstName(request.getFirstName())
