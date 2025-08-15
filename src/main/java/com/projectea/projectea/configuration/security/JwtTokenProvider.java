@@ -19,7 +19,7 @@ import java.util.function.Function;
 public class JwtTokenProvider {
 
     @Value("${jwt.signing.key}")
-    private static String JWT_SIGNING_KEY;
+    private String JWT_SIGNING_KEY;
 
     public String getUsername(String token) {
         return getClaimFromToken(token, Claims::getSubject);
