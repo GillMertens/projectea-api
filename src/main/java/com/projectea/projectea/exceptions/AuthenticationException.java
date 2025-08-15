@@ -1,4 +1,4 @@
-package com.projectea.projectea.domain.impl.auth.excpetions;
+package com.projectea.projectea.exceptions;
 
 public class AuthenticationException extends RuntimeException {
     public AuthenticationException(String message, Throwable cause) {
