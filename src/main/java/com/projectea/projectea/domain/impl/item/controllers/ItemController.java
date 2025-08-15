@@ -33,7 +33,7 @@ public class ItemController {
         return itemService.getItemById(id);
     }
 
-    @GetMapping("/items")
+    @GetMapping("/")
     public List<Item> getItemsByCategory(@RequestParam String category) {
         return itemService.getItemsByCategory(category);
     }
