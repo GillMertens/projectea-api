@@ -24,18 +24,15 @@ public class ItemController {
     private final ItemServiceImpl itemService;
 
     @GetMapping
-    public List<Item> getAllItems() {
-        return itemService.getAllItems();
+    public List<Item> getItems(@RequestParam(required = false) String category) {
+        return (category == null || category.isBlank())
+                ? itemService.getAllItems()
+                : itemService.getItemsByCategory(category);
     }
 
     @GetMapping(value = "/{id}")
     public Item getItemById(@PathVariable Long id) {
         return itemService.getItemById(id);
-    }
-
-    @GetMapping("/")
-    public List<Item> getItemsByCategory(@RequestParam String category) {
-        return itemService.getItemsByCategory(category);
     }
 
     @PostMapping
