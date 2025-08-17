@@ -32,7 +32,7 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public Reservation updateReservation(Long id, Reservation reservation) {
         return reservationRepository.findById(id).map(existingReservation -> {
-            existingReservation.setUserId(reservation.getUserId());
+            existingReservation.setUser(reservation.getUser());
             existingReservation.setStatus(reservation.getStatus());
             existingReservation.setPickupDate(reservation.getPickupDate());
             existingReservation.setReturnDate(reservation.getReturnDate());
@@ -48,6 +48,6 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public List<Reservation> getReservationsByUserId(Long userId) {
-        return reservationRepository.findByUserId(userId);
+        return reservationRepository.findByUser_Id(userId);
     }
 }

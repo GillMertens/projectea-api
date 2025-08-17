@@ -1,8 +1,8 @@
 package com.projectea.projectea.domain.impl.reservation.controllers;
 
+import com.projectea.projectea.domain.impl.reservation.DTO.ReservationResponseDto;
+import com.projectea.projectea.domain.impl.reservation.adapter.ReservationAdapter;
 import com.projectea.projectea.domain.impl.reservation.entities.Reservation;
-import com.projectea.projectea.domain.impl.reservation.services.ReservationService;
-import com.projectea.projectea.domain.impl.reservation.services.ReservationServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,17 +21,17 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/reservations")
 public class ReservationController {
-    private final ReservationServiceImpl reservationService;
+    private final ReservationAdapter reservationAdapter;
 
     @GetMapping
-    public ResponseEntity<List<Reservation>> getAllReservations() {
-        List<Reservation> reservations = reservationService.getAllReservations();
+    public ResponseEntity<List<ReservationResponseDto>> getAllReservations() {
+        List<ReservationResponseDto> reservations = reservationAdapter.getAllReservationsDto();
         return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Reservation> getReservationById(@PathVariable Long id) {
-        Reservation reservation = reservationService.getReservationById(id);
+    public ResponseEntity<ReservationResponseDto> getReservationById(@PathVariable Long id) {
+        ReservationResponseDto reservation = reservationAdapter.getReservationByIdDto(id);
         if (reservation != null) {
             return new ResponseEntity<>(reservation, HttpStatus.OK);
         } else {
@@ -40,14 +40,14 @@ public class ReservationController {
     }
 
     @PostMapping
-    public ResponseEntity<Reservation> createReservation(@RequestBody Reservation reservation) {
-        Reservation createdReservation = reservationService.createReservation(reservation);
+    public ResponseEntity<ReservationResponseDto> createReservation(@RequestBody Reservation reservation) {
+        ReservationResponseDto createdReservation = reservationAdapter.createReservationDto(reservation);
         return new ResponseEntity<>(createdReservation, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Reservation> updateReservation(@PathVariable Long id, @RequestBody Reservation reservation) {
-        Reservation updatedReservation = reservationService.updateReservation(id, reservation);
+    public ResponseEntity<ReservationResponseDto> updateReservation(@PathVariable Long id, @RequestBody Reservation reservation) {
+        ReservationResponseDto updatedReservation = reservationAdapter.updateReservationDto(id, reservation);
         if (updatedReservation != null) {
             return new ResponseEntity<>(updatedReservation, HttpStatus.OK);
         } else {
@@ -57,13 +57,13 @@ public class ReservationController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteReservation(@PathVariable Long id) {
-        reservationService.deleteReservation(id);
+        reservationAdapter.deleteReservation(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Reservation>> getReservationsByUserId(@PathVariable Long userId) {
-        List<Reservation> reservations = reservationService.getReservationsByUserId(userId);
+    public ResponseEntity<List<ReservationResponseDto>> getReservationsByUserId(@PathVariable Long userId) {
+        List<ReservationResponseDto> reservations = reservationAdapter.getReservationsByUserIdDto(userId);
         return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
 }
