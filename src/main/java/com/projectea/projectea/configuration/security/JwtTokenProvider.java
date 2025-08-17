@@ -14,38 +14,41 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-
 @Service
 public class JwtTokenProvider {
 
-    @Value("${jwt.signing.key}")
-    private String JWT_SIGNING_KEY;
+    private final SecretKey signingKey;
+
+    public JwtTokenProvider(@Value("${jwt.signing.key}") String key) {
+        byte[] bytes = Decoders.BASE64.decode(key);
+        this.signingKey = Keys.hmacShaKeyFor(bytes);
+    }
 
     public String getUsername(String token) {
         return getClaimFromToken(token, Claims::getSubject);
     }
 
-    public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
-        final Claims claims = getAllClaimsFromToken(token);
-        return claimsResolver.apply(claims);
+    public <T> T getClaimFromToken(String token, Function<Claims, T> resolver) {
+        return resolver.apply(getAllClaimsFromToken(token));
     }
 
     public String generateToken(UserDetails userDetails) {
         return generateToken(new HashMap<>(), userDetails);
     }
+
     public String generateToken(Map<String, Object> claims, UserDetails userDetails) {
         return Jwts.builder()
                 .claims(claims)
                 .subject(userDetails.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
-                .signWith(getPublicSigningKey(), Jwts.SIG.HS256)
+                .expiration(new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 10)) // 10h
+                .signWith(signingKey, Jwts.SIG.HS256)
                 .compact();
     }
 
-    public Boolean validateToken(String token, UserDetails userDetails) {
-        final String username = getUsername(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    public boolean validateToken(String token, UserDetails userDetails) {
+        String username = getUsername(token);
+        return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
     }
 
     private boolean isTokenExpired(String token) {
@@ -58,14 +61,9 @@ public class JwtTokenProvider {
 
     private Claims getAllClaimsFromToken(String token) {
         return Jwts.parser()
-                .verifyWith(getPublicSigningKey())
+                .verifyWith(signingKey)
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
-    }
-
-    private SecretKey getPublicSigningKey() {
-        byte[] decodedKey = Decoders.BASE64.decode(JWT_SIGNING_KEY);
-        return Keys.hmacShaKeyFor(decodedKey);
     }
 }

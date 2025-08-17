@@ -21,7 +21,6 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
-@EnableWebMvc
 @RequiredArgsConstructor
 public class WebSecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
