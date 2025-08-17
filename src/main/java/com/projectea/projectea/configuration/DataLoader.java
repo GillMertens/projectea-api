@@ -1,5 +1,8 @@
 package com.projectea.projectea.configuration;
 
+import com.projectea.projectea.domain.impl.reservation.entities.Reservation;
+import com.projectea.projectea.domain.impl.reservation.entities.ReservationStatus;
+import com.projectea.projectea.domain.impl.reservation.repositories.ReservationRepository;
 import com.projectea.projectea.domain.impl.user.entities.Address;
 import com.projectea.projectea.domain.impl.user.entities.User;
 import com.projectea.projectea.domain.impl.user.entities.Role;
@@ -15,12 +18,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class DataLoader implements CommandLineRunner {
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
     private final ItemRepository itemRepository;
+    private final ReservationRepository reservationRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -128,5 +134,13 @@ public class DataLoader implements CommandLineRunner {
         item8.setPrice(99.99);
         item8.setCategory(category2);
         itemRepository.save(item8);
+
+        Reservation reservation1 = new Reservation();
+        reservation1.setUser(user1);
+        reservation1.setStatus(ReservationStatus.PENDING);
+        reservation1.setPickupDate(java.time.LocalDateTime.now().plusDays(1));
+        reservation1.setReturnDate(java.time.LocalDateTime.now().plusDays(7));
+        reservation1.setItems(List.of(item1, item2, item3));
+        reservationRepository.save(reservation1);
     }
 }
