@@ -1,9 +1,12 @@
 package com.projectea.projectea.domain.impl.item.controllers;
 
 
+import com.projectea.projectea.domain.impl.item.DTO.ItemDto;
+import com.projectea.projectea.domain.impl.item.adapter.ItemAdapter;
 import com.projectea.projectea.domain.impl.item.entities.Item;
-import com.projectea.projectea.domain.impl.item.services.ItemServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,32 +24,37 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ItemController {
     public static final String BASE_URL = "/api/v1/items";
-    private final ItemServiceImpl itemService;
+    private final ItemAdapter itemAdapter;
 
     @GetMapping
-    public List<Item> getItems(@RequestParam(required = false) String category) {
-        return (category == null || category.isBlank())
-                ? itemService.getAllItems()
-                : itemService.getItemsByCategory(category);
+    public ResponseEntity<List<ItemDto>> getItems(@RequestParam(required = false) String category) {
+        List<ItemDto> items = (category == null || category.isBlank())
+                ? itemAdapter.getAllItemsDto()
+                : itemAdapter.getItemsByCategoryDto(category);
+        return new ResponseEntity<>(items, HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}")
-    public Item getItemById(@PathVariable Long id) {
-        return itemService.getItemById(id);
+    public ResponseEntity<ItemDto> getItemById(@PathVariable Long id) {
+        ItemDto item = itemAdapter.getItemByIdDto(id);
+        return item != null ? new ResponseEntity<>(item, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping
-    public Item createItem(@RequestBody Item item) {
-        return itemService.createItem(item);
+    public ResponseEntity<ItemDto> createItem(@RequestBody Item item) {
+        ItemDto created = itemAdapter.createItemDto(item);
+        return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/{id}")
-    public Item updateItem(@PathVariable Long id, @RequestBody Item item) {
-        return itemService.updateItem(id, item);
+    public ResponseEntity<ItemDto> updateItem(@PathVariable Long id, @RequestBody Item item) {
+        ItemDto updated = itemAdapter.updateItemDto(id, item);
+        return updated != null ? new ResponseEntity<>(updated, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping(value = "/{id}")
-    public void deleteItem(@PathVariable Long id) {
-        itemService.deleteItem(id);
+    public ResponseEntity<Void> deleteItem(@PathVariable Long id) {
+        itemAdapter.deleteItem(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
