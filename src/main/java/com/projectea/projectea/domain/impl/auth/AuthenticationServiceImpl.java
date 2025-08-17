@@ -32,7 +32,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public AuthenticationResponse register(RegisterRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new EmailAlreadyExistsException("A user with this email already exists");
+            throw new EmailAlreadyExistsException();
         }
         var user = User.builder()
             .firstName(request.getFirstName())

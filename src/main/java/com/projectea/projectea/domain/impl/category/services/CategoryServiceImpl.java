@@ -2,6 +2,7 @@ package com.projectea.projectea.domain.impl.category.services;
 
 import com.projectea.projectea.domain.impl.category.entities.Category;
 import com.projectea.projectea.domain.impl.category.repositories.CategoryRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,10 +20,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category getCategoryById(Long id) {
-        Category category = categoryRepository.findById(id).orElse(null);
-        assert category != null;
-        System.out.println(category.getName());
-        return categoryRepository.findById(id).orElse(null);
+        return categoryRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Category not found: " + id));
     }
 
     @Override

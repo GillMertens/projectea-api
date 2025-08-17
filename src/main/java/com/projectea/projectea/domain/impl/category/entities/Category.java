@@ -1,5 +1,6 @@
 package com.projectea.projectea.domain.impl.category.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.projectea.projectea.domain.impl.item.entities.Item;
 import jakarta.persistence.Column;
@@ -12,6 +13,7 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -28,6 +30,6 @@ public class Category {
     private String name;
 
     @OneToMany(mappedBy = "category")
-    @JsonManagedReference
-    private Set<Item> items;
+    @JsonIgnore
+    private Set<Item> items = new HashSet<>();
 }
