@@ -10,6 +10,8 @@ public class ItemDto {
     private String name;
     private String description;
     private String brand;
+    private String thumbnailUrl;
+    private java.util.List<String> images;
     private Long categoryId;
     private java.util.List<ItemUnitSummaryDto> units;
 }

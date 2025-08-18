@@ -6,6 +6,7 @@ import com.projectea.projectea.domain.impl.item.entities.Item;
 import com.projectea.projectea.domain.impl.item.services.ItemService;
 import com.projectea.projectea.domain.impl.category.entities.Category;
 import com.projectea.projectea.domain.impl.item.entities.ItemUnit;
+import com.projectea.projectea.domain.impl.item.entities.ItemImage;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.Converter;
@@ -28,9 +29,14 @@ public class ItemAdapter {
                 .map(unit -> modelMapper.map(unit, ItemUnitSummaryDto.class))
                 .collect(java.util.stream.Collectors.toList());
 
+        Converter<java.util.List<ItemImage>, java.util.List<String>> imagesToUrls = ctx -> ctx.getSource() == null ? java.util.Collections.emptyList() : ctx.getSource().stream()
+                .map(ItemImage::getUrl)
+                .collect(java.util.stream.Collectors.toList());
+
         modelMapper.typeMap(Item.class, ItemDto.class).addMappings(mapper -> {
                 mapper.using(categoryToId).map(Item::getCategory, ItemDto::setCategoryId);
                 mapper.using(unitsToSummaries).map(Item::getUnits, ItemDto::setUnits);
+                mapper.using(imagesToUrls).map(Item::getImages, ItemDto::setImages);
             }
         );
     }
