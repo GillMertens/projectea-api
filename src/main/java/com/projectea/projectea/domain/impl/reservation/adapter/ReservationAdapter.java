@@ -15,6 +15,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.time.LocalDateTime;
 import java.util.Map;
@@ -85,7 +86,7 @@ public class ReservationAdapter {
         if (dto.getUnitIds() != null) {
             List<ItemUnit> units = dto.getUnitIds().stream()
                     .map(id -> itemUnitRepository.findById(id).orElse(null))
-                    .filter(u -> u != null)
+                    .filter(Objects::nonNull)
                     .collect(Collectors.toList());
             reservation.setUnits(units);
         }
