@@ -1,15 +1,19 @@
 package com.projectea.projectea.domain.impl.item.adapter;
 
 import com.projectea.projectea.domain.impl.item.DTO.ItemUnitDto;
+import com.projectea.projectea.domain.impl.item.DTO.ItemUnitAvailabilityDto;
 import com.projectea.projectea.domain.impl.item.entities.ItemUnit;
 import com.projectea.projectea.domain.impl.item.services.ItemUnitService;
+import com.projectea.projectea.domain.impl.reservation.repositories.ReservationRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.UUID;
 
@@ -18,6 +22,7 @@ import java.util.UUID;
 public class ItemUnitAdapter {
     private final ItemUnitService itemUnitService;
     private final ModelMapper modelMapper;
+    private final ReservationRepository reservationRepository;
 
     @PostConstruct
     public void configureMappings() {
@@ -50,6 +55,26 @@ public class ItemUnitAdapter {
 
     public void deleteUnit(UUID id) {
         itemUnitService.deleteUnit(id);
+    }
+
+    public List<ItemUnitAvailabilityDto> getUnitsAvailabilityDto(List<UUID> unitIds, LocalDateTime pickupDate, LocalDateTime returnDate) {
+        List<ItemUnit> availableUnits = itemUnitService.getUnitsAvailability(unitIds, pickupDate, returnDate);
+        
+        List<UUID> ids = unitIds.stream().collect(Collectors.toList());
+        List<com.projectea.projectea.domain.impl.reservation.entities.Reservation> overlapping = reservationRepository
+                .findByUnits_IdInAndReturnDateAfterAndPickupDateBefore(ids, pickupDate, returnDate);
+
+        Map<UUID, LocalDateTime> unitToMaxReturn = overlapping.stream()
+                .flatMap(r -> r.getUnits().stream().map(u -> Map.entry(u.getId(), r.getReturnDate())))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (a, b) -> a.isAfter(b) ? a : b));
+
+        return unitIds.stream()
+                .map(id -> {
+                    LocalDateTime until = unitToMaxReturn.get(id);
+                    boolean available = until == null || !until.isAfter(pickupDate);
+                    return new ItemUnitAvailabilityDto(id, available, until);
+                })
+                .collect(Collectors.toList());
     }
 }
 

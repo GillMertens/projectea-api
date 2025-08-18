@@ -1,6 +1,7 @@
 package com.projectea.projectea.domain.impl.item.controllers;
 
 import com.projectea.projectea.domain.impl.item.DTO.ItemUnitDto;
+import com.projectea.projectea.domain.impl.item.DTO.ItemUnitAvailabilityDto;
 import com.projectea.projectea.domain.impl.item.adapter.ItemUnitAdapter;
 import com.projectea.projectea.domain.impl.item.entities.ItemUnit;
 import lombok.RequiredArgsConstructor;
@@ -13,8 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -52,6 +55,18 @@ public class ItemUnitController {
     public ResponseEntity<Void> deleteUnit(@PathVariable UUID id) {
         itemUnitAdapter.deleteUnit(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/availability")
+    public ResponseEntity<List<ItemUnitAvailabilityDto>> getUnitsAvailability(@RequestParam List<UUID> unitIds,
+                                                                              @RequestParam String pickup,
+                                                                              @RequestParam Integer durationDays) {
+        LocalDateTime pickupDate = LocalDateTime.parse(pickup);
+        int days = Math.max(1, Math.min(7, durationDays));
+        LocalDateTime returnDate = pickupDate.plusDays(days);
+
+        List<ItemUnitAvailabilityDto> availability = itemUnitAdapter.getUnitsAvailabilityDto(unitIds, pickupDate, returnDate);
+        return new ResponseEntity<>(availability, HttpStatus.OK);
     }
 }
 
