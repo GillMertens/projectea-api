@@ -14,6 +14,8 @@ import com.projectea.projectea.domain.impl.item.entities.Item;
 import com.projectea.projectea.domain.impl.item.repositories.ItemRepository;
 import com.projectea.projectea.domain.impl.item.entities.ItemUnit;
 import com.projectea.projectea.domain.impl.item.repositories.ItemUnitRepository;
+import com.projectea.projectea.domain.impl.item.entities.ItemImage;
+import com.projectea.projectea.domain.impl.item.repositories.ItemImageRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -29,6 +31,7 @@ public class DataLoader implements CommandLineRunner {
     private final ItemRepository itemRepository;
     private final ReservationRepository reservationRepository;
     private final ItemUnitRepository itemUnitRepository;
+    private final ItemImageRepository itemImageRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -68,8 +71,14 @@ public class DataLoader implements CommandLineRunner {
         item1.setName("LED Light Panel");
         item1.setDescription("A high-performance LED light panel");
         item1.setBrand("BrandX");
+        item1.setThumbnailUrl("assets/images/items/a-high-performance-led-light-panel/a-high-performance-led-light-panel-1.jpg");
         item1.setCategory(category1);
         itemRepository.save(item1);
+        addImage(item1, "assets/images/items/a-high-performance-led-light-panel/a-high-performance-led-light-panel-1.jpg");
+        addImage(item1, "assets/images/items/a-high-performance-led-light-panel/a-high-performance-led-light-panel-2.jpg");
+        addImage(item1, "assets/images/items/a-high-performance-led-light-panel/a-high-performance-led-light-panel-3.jpg");
+        addImage(item1, "assets/images/items/a-high-performance-led-light-panel/a-high-performance-led-light-panel-4.jpg");
+        addImage(item1, "assets/images/items/a-high-performance-led-light-panel/a-high-performance-led-light-panel-5.jpg");
         ItemUnit item1u1 = new ItemUnit();
         item1u1.setItem(item1);
         item1u1.setCondition(Condition.NEW);
@@ -83,8 +92,13 @@ public class DataLoader implements CommandLineRunner {
         item2.setName("Stage Light MX-1000");
         item2.setDescription("A high-performance stage light");
         item2.setBrand("BrandY");
+        item2.setThumbnailUrl("assets/images/items/a-high-performance-stage-light/a-high-performance-stage-light-1.avif");
         item2.setCategory(category1);
         itemRepository.save(item2);
+        addImage(item2, "assets/images/items/a-high-performance-stage-light/a-high-performance-stage-light-1.avif");
+        addImage(item2, "assets/images/items/a-high-performance-stage-light/a-high-performance-stage-light-2.avif");
+        addImage(item2, "assets/images/items/a-high-performance-stage-light/a-high-performance-stage-light-3.avif");
+        addImage(item2, "assets/images/items/a-high-performance-stage-light/a-high-performance-stage-light-4.avif");
         ItemUnit item2u1 = new ItemUnit();
         item2u1.setItem(item2);
         item2u1.setCondition(Condition.USED);
@@ -94,8 +108,10 @@ public class DataLoader implements CommandLineRunner {
         item3.setName("LED Light Bulb");
         item3.setDescription("A high-performance LED light bulb");
         item3.setBrand("BrandZ");
+        item3.setThumbnailUrl("assets/images/items/a-high-performance-led-light-bulb/a-high-performance-led-light-bulb-1.webp");
         item3.setCategory(category1);
         itemRepository.save(item3);
+        addImage(item3, "assets/images/items/a-high-performance-led-light-bulb/a-high-performance-led-light-bulb-1.webp");
         ItemUnit item3u1 = new ItemUnit();
         item3u1.setItem(item3);
         item3u1.setCondition(Condition.NEW);
@@ -105,8 +121,13 @@ public class DataLoader implements CommandLineRunner {
         item4.setName("LED Light Strip");
         item4.setDescription("A high-performance LED light strip");
         item4.setBrand("BrandZ");
+        item4.setThumbnailUrl("assets/images/items/a-high-performance-led-light-strip/a-high-performance-led-light-strip-1.webp");
         item4.setCategory(category1);
         itemRepository.save(item4);
+        addImage(item4, "assets/images/items/a-high-performance-led-light-strip/a-high-performance-led-light-strip-1.webp");
+        addImage(item4, "assets/images/items/a-high-performance-led-light-strip/a-high-performance-led-light-strip-2.webp");
+        addImage(item4, "assets/images/items/a-high-performance-led-light-strip/a-high-performance-led-light-strip-3.webp");
+        addImage(item4, "assets/images/items/a-high-performance-led-light-strip/a-high-performance-led-light-strip-4.webp");
         ItemUnit item4u1 = new ItemUnit();
         item4u1.setItem(item4);
         item4u1.setCondition(Condition.NEW);
@@ -117,8 +138,14 @@ public class DataLoader implements CommandLineRunner {
         item5.setName("Blue Yeti USB Microphone");
         item5.setDescription("A high quality USB microphone perfect for podcasting, streaming, and more");
         item5.setBrand("Blue");
+        item5.setThumbnailUrl("assets/images/items/a-high-quality-usb-microphone-perfect-for-podcasting-streaming-and-more/a-high-quality-usb-microphone-perfect-for-podcasting-streaming-and-more-1.png");
         item5.setCategory(category2);
         itemRepository.save(item5);
+        addImage(item5, "assets/images/items/a-high-quality-usb-microphone-perfect-for-podcasting-streaming-and-more/a-high-quality-usb-microphone-perfect-for-podcasting-streaming-and-more-1.png");
+        addImage(item5, "assets/images/items/a-high-quality-usb-microphone-perfect-for-podcasting-streaming-and-more/a-high-quality-usb-microphone-perfect-for-podcasting-streaming-and-more-2.png");
+        addImage(item5, "assets/images/items/a-high-quality-usb-microphone-perfect-for-podcasting-streaming-and-more/a-high-quality-usb-microphone-perfect-for-podcasting-streaming-and-more-3.png");
+        addImage(item5, "assets/images/items/a-high-quality-usb-microphone-perfect-for-podcasting-streaming-and-more/a-high-quality-usb-microphone-perfect-for-podcasting-streaming-and-more-4.png");
+        addImage(item5, "assets/images/items/a-high-quality-usb-microphone-perfect-for-podcasting-streaming-and-more/a-high-quality-usb-microphone-perfect-for-podcasting-streaming-and-more-5.png");
         ItemUnit item5u1 = new ItemUnit();
         item5u1.setItem(item5);
         item5u1.setCondition(Condition.USED);
@@ -128,8 +155,14 @@ public class DataLoader implements CommandLineRunner {
         item6.setName("Audio-Technica ATH-M50x");
         item6.setDescription("Professional studio monitor headphones");
         item6.setBrand("Audio-Technica");
+        item6.setThumbnailUrl("assets/images/items/professional-studio-monitor-headphones/professional-studio-monitor-headphones-1.webp");
         item6.setCategory(category2);
         itemRepository.save(item6);
+        addImage(item6, "assets/images/items/professional-studio-monitor-headphones/professional-studio-monitor-headphones-1.webp");
+        addImage(item6, "assets/images/items/professional-studio-monitor-headphones/professional-studio-monitor-headphones-2.webp");
+        addImage(item6, "assets/images/items/professional-studio-monitor-headphones/professional-studio-monitor-headphones-3.webp");
+        addImage(item6, "assets/images/items/professional-studio-monitor-headphones/professional-studio-monitor-headphones-4.webp");
+        addImage(item6, "assets/images/items/professional-studio-monitor-headphones/professional-studio-monitor-headphones-5.webp");
         ItemUnit item6u1 = new ItemUnit();
         item6u1.setItem(item6);
         item6u1.setCondition(Condition.USED);
@@ -139,8 +172,11 @@ public class DataLoader implements CommandLineRunner {
         item7.setName("Focusrite Scarlett 2i2");
         item7.setDescription("USB audio interface");
         item7.setBrand("Focusrite");
+        item7.setThumbnailUrl("assets/images/items/usb-audio-interface/usb-audio-interface-1.jpg");
         item7.setCategory(category2);
         itemRepository.save(item7);
+        addImage(item7, "assets/images/items/usb-audio-interface/usb-audio-interface-1.jpg");
+        addImage(item7, "assets/images/items/usb-audio-interface/usb-audio-interface-2.jpg");
         ItemUnit item7u1 = new ItemUnit();
         item7u1.setItem(item7);
         item7u1.setCondition(Condition.USED);
@@ -150,8 +186,10 @@ public class DataLoader implements CommandLineRunner {
         item8.setName("Shure SM58");
         item8.setDescription("Dynamic vocal microphone");
         item8.setBrand("Shure");
+        item8.setThumbnailUrl("assets/images/items/dynamic-vocal-microphone/dynamic-vocal-microphone-1.webp");
         item8.setCategory(category2);
         itemRepository.save(item8);
+        addImage(item8, "assets/images/items/dynamic-vocal-microphone/dynamic-vocal-microphone-1.webp");
         ItemUnit item8u1 = new ItemUnit();
         item8u1.setItem(item8);
         item8u1.setCondition(Condition.USED);
@@ -164,5 +202,13 @@ public class DataLoader implements CommandLineRunner {
         reservation1.setReturnDate(java.time.LocalDateTime.now().plusDays(7));
         reservation1.setUnits(List.of(item1u1, item2u1, item3u1));
         reservationRepository.save(reservation1);
+
+    }
+
+    private void addImage(Item item, String url) {
+        ItemImage img = new ItemImage();
+        img.setItem(item);
+        img.setUrl(url);
+        itemImageRepository.save(img);
     }
 }
