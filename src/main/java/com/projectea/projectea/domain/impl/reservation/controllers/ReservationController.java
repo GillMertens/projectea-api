@@ -3,9 +3,12 @@ package com.projectea.projectea.domain.impl.reservation.controllers;
 import com.projectea.projectea.domain.impl.reservation.DTO.ReservationResponseDto;
 import com.projectea.projectea.domain.impl.reservation.adapter.ReservationAdapter;
 import com.projectea.projectea.domain.impl.reservation.DTO.ReservationCreateDto;
+import com.projectea.projectea.domain.impl.user.entities.User;
+import com.projectea.projectea.domain.impl.user.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +25,7 @@ import java.util.List;
 @RequestMapping("/api/v1/reservations")
 public class ReservationController {
     private final ReservationAdapter reservationAdapter;
+    private final UserRepository userRepository;
 
     @GetMapping
     public ResponseEntity<List<ReservationResponseDto>> getAllReservations() {
@@ -64,6 +68,20 @@ public class ReservationController {
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<ReservationResponseDto>> getReservationsByUserId(@PathVariable Long userId) {
         List<ReservationResponseDto> reservations = reservationAdapter.getReservationsByUserIdDto(userId);
+        return new ResponseEntity<>(reservations, HttpStatus.OK);
+    }
+
+    @GetMapping("/user/me")
+    public ResponseEntity<List<ReservationResponseDto>> getMyReservations(Authentication authentication) {
+        String email = authentication != null ? authentication.getName() : null;
+        if (email == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        User user = userRepository.findByEmail(email).orElse(null);
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        List<ReservationResponseDto> reservations = reservationAdapter.getReservationsByUserIdDto(user.getId());
         return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
 }
