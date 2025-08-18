@@ -12,6 +12,9 @@ spring:
       hibernate:
         format_sql: true
     database: mysql
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
 server:
   port: 8080
 logging:
@@ -19,4 +22,4 @@ logging:
     org.springframework: ERROR
 jwt:
   signing:
-    key: ${JWT_SIGNING_KEY}
+    key: 59c7f3614ddc4bdc4809f4391782ac3b3893ab8feb6dedbe8ceb767763a37785

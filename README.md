@@ -29,10 +29,15 @@ docker compose -f compose.local.yml up -d
 ---
 
 ## ▶️ Run the API
-
+For bash run:
 ```bash
 # from projectea-api/
 mvn clean spring-boot:run -Dspring-boot.run.profiles=local
+```
+
+In powershell run:
+```powershell
+mvn spring-boot:run "-Dspring-boot.run.profiles=local"
 ```
 
 The app seeds demo data (users, categories, items, item units, a sample reservation) via `DataLoader`.
