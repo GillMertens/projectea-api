@@ -2,7 +2,7 @@ package com.projectea.projectea.domain.impl.reservation.controllers;
 
 import com.projectea.projectea.domain.impl.reservation.DTO.ReservationResponseDto;
 import com.projectea.projectea.domain.impl.reservation.adapter.ReservationAdapter;
-import com.projectea.projectea.domain.impl.reservation.entities.Reservation;
+import com.projectea.projectea.domain.impl.reservation.DTO.ReservationCreateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,14 +40,14 @@ public class ReservationController {
     }
 
     @PostMapping
-    public ResponseEntity<ReservationResponseDto> createReservation(@RequestBody Reservation reservation) {
-        ReservationResponseDto createdReservation = reservationAdapter.createReservationDto(reservation);
+    public ResponseEntity<ReservationResponseDto> createReservation(@RequestBody ReservationCreateDto reservation) {
+        ReservationResponseDto createdReservation = reservationAdapter.createReservationFromDto(reservation);
         return new ResponseEntity<>(createdReservation, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ReservationResponseDto> updateReservation(@PathVariable Long id, @RequestBody Reservation reservation) {
-        ReservationResponseDto updatedReservation = reservationAdapter.updateReservationDto(id, reservation);
+    public ResponseEntity<ReservationResponseDto> updateReservation(@PathVariable Long id, @RequestBody ReservationCreateDto reservation) {
+        ReservationResponseDto updatedReservation = reservationAdapter.updateReservationFromDto(id, reservation);
         if (updatedReservation != null) {
             return new ResponseEntity<>(updatedReservation, HttpStatus.OK);
         } else {

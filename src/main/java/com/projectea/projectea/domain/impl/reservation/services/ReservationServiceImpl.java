@@ -36,7 +36,7 @@ public class ReservationServiceImpl implements ReservationService {
             existingReservation.setStatus(reservation.getStatus());
             existingReservation.setPickupDate(reservation.getPickupDate());
             existingReservation.setReturnDate(reservation.getReturnDate());
-            existingReservation.setItems(reservation.getItems());
+            existingReservation.setUnits(reservation.getUnits());
             return reservationRepository.save(existingReservation);
         }).orElse(null);
     }

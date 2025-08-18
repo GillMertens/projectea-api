@@ -1,6 +1,6 @@
 package com.projectea.projectea.domain.impl.reservation.entities;
 
-import com.projectea.projectea.domain.impl.item.entities.Item;
+import com.projectea.projectea.domain.impl.item.entities.ItemUnit;
 import com.projectea.projectea.domain.impl.user.entities.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -46,9 +46,9 @@ public class Reservation {
 
     @ManyToMany
     @JoinTable(
-        name = "reservation_items",
+        name = "reservation_units",
         joinColumns = @JoinColumn(name = "reservation_id"),
-        inverseJoinColumns = @JoinColumn(name = "item_id")
+        inverseJoinColumns = @JoinColumn(name = "unit_id")
     )
-    private List<Item> items;
+    private List<ItemUnit> units;
 }

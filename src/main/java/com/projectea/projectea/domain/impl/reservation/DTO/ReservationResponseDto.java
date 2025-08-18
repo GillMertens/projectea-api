@@ -1,5 +1,6 @@
 package com.projectea.projectea.domain.impl.reservation.DTO;
 
+import com.projectea.projectea.domain.impl.item.DTO.ItemDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +15,6 @@ public class ReservationResponseDto {
     private String status;
     private LocalDateTime pickupDate;
     private LocalDateTime returnDate;
-    private List<ItemSummaryDto> items;
+    private List<ItemDto> items;
 
 }

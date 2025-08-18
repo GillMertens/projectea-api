@@ -1,11 +1,16 @@
 package com.projectea.projectea.domain.impl.reservation.DTO;
 
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.util.List;
+import java.util.UUID;
+
+@Getter
+@Setter
 public class ReservationCreateDto{
     private Long userId;
-    private String status;
-    private String pickupDate;
+    private String pickupDate; 
     private String returnDate;
-    private List<Long> itemId;
+    private List<UUID> unitIds;
 }
