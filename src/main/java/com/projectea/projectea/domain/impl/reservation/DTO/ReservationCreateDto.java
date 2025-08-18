@@ -11,6 +11,6 @@ import java.util.UUID;
 public class ReservationCreateDto{
     private Long userId;
     private String pickupDate; 
-    private String returnDate;
+    private Integer durationDays; // server will calculate returnDate (max 7)
     private List<UUID> unitIds;
 }

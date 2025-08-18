@@ -80,8 +80,14 @@ public class ReservationAdapter {
         if (dto.getPickupDate() != null) {
             reservation.setPickupDate(LocalDateTime.parse(dto.getPickupDate()));
         }
-        if (dto.getReturnDate() != null) {
-            reservation.setReturnDate(LocalDateTime.parse(dto.getReturnDate()));
+        if (dto.getPickupDate() != null) {
+            reservation.setPickupDate(LocalDateTime.parse(dto.getPickupDate()));
+        }
+        if (dto.getDurationDays() != null) {
+            int days = Math.max(1, Math.min(7, dto.getDurationDays()));
+            if (reservation.getPickupDate() != null) {
+                reservation.setReturnDate(reservation.getPickupDate().plusDays(days));
+            }
         }
         if (dto.getUnitIds() != null) {
             List<ItemUnit> units = dto.getUnitIds().stream()

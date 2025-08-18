@@ -84,4 +84,6 @@ public class ReservationController {
         List<ReservationResponseDto> reservations = reservationAdapter.getReservationsByUserIdDto(user.getId());
         return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
+
+
 }
