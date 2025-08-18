@@ -1,6 +1,5 @@
 package com.projectea.projectea.domain.impl.item.DTO;
 
-import com.projectea.projectea.domain.impl.item.entities.Condition;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +10,6 @@ public class ItemDto {
     private String name;
     private String description;
     private String brand;
-    private Condition condition;
-    private double price;
     private Long categoryId;
+    private java.util.List<ItemUnitSummaryDto> units;
 }

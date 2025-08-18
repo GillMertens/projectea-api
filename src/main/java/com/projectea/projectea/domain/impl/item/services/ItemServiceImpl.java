@@ -40,8 +40,6 @@ public class ItemServiceImpl implements ItemService {
         existingItem.setName(item.getName());
         existingItem.setDescription(item.getDescription());
         existingItem.setBrand(item.getBrand());
-        existingItem.setCondition(item.getCondition());
-        existingItem.setPrice(item.getPrice());
         existingItem.setCategory(item.getCategory());
         return itemRepository.save(existingItem);
     }

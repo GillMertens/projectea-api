@@ -9,5 +9,4 @@ public class ItemSummaryDto {
     private Long id;
     private String name;
     private String brand;
-    private double price;
 }
