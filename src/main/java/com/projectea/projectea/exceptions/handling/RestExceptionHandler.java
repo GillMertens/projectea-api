@@ -18,9 +18,10 @@ import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import java.nio.file.AccessDeniedException;
 import java.util.HashMap;
 import java.util.Map;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 
 
 @ControllerAdvice
@@ -44,11 +45,18 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return logAndReturnError(exception, HttpStatus.UNAUTHORIZED, request);
     }
 
-    @ExceptionHandler(AccessDeniedException.class)
-    public final ResponseEntity<ExceptionResponse> handleAccessDeniedException(AccessDeniedException ex, HttpServletRequest request) {
-        ExceptionResponse exceptionResponse = new ExceptionResponse(ex.getMessage(), HttpStatus.FORBIDDEN);
-        logger.error(String.format("[ERROR] %s %s %s", request.getMethod(), request.getServletPath(), ex.getMessage()));
+    @ExceptionHandler(org.springframework.security.access.AccessDeniedException.class)
+    public final ResponseEntity<ExceptionResponse> handleAccessDeniedException(org.springframework.security.access.AccessDeniedException ex, HttpServletRequest request) {
+        ExceptionResponse exceptionResponse = new ExceptionResponse("Access Denied: Insufficient permissions", HttpStatus.FORBIDDEN);
+        log.error("[ERROR] {} {} - Access Denied: {}", request.getMethod(), request.getServletPath(), ex.getMessage());
         return new ResponseEntity<>(exceptionResponse, HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public final ResponseEntity<ExceptionResponse> handleAuthenticationException(AuthenticationException ex, HttpServletRequest request) {
+        ExceptionResponse exceptionResponse = new ExceptionResponse("Authentication failed: Invalid or expired token", HttpStatus.UNAUTHORIZED);
+        log.error("[ERROR] {} {} - Authentication failed: {}", request.getMethod(), request.getServletPath(), ex.getMessage());
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.UNAUTHORIZED);
     }
 
     /**

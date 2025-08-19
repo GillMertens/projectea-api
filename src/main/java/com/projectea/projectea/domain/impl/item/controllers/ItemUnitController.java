@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
@@ -28,36 +29,42 @@ public class ItemUnitController {
     private final ItemUnitAdapter itemUnitAdapter;
 
     @GetMapping("/item/{itemId}")
+    @PreAuthorize("hasAuthority('read:item_unit')")
     public ResponseEntity<List<ItemUnitDto>> getUnitsByItem(@PathVariable Long itemId) {
         List<ItemUnitDto> units = itemUnitAdapter.getUnitsByItemIdDto(itemId);
         return new ResponseEntity<>(units, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('read:item_unit')")
     public ResponseEntity<ItemUnitDto> getUnit(@PathVariable UUID id) {
         ItemUnitDto unit = itemUnitAdapter.getUnitByIdDto(id);
         return unit != null ? new ResponseEntity<>(unit, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('create:item_unit')")
     public ResponseEntity<ItemUnitDto> createUnit(@RequestBody ItemUnit unit) {
         ItemUnitDto created = itemUnitAdapter.createUnitDto(unit);
         return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('update:item_unit')")
     public ResponseEntity<ItemUnitDto> updateUnit(@PathVariable UUID id, @RequestBody ItemUnit unit) {
         ItemUnitDto updated = itemUnitAdapter.updateUnitDto(id, unit);
         return updated != null ? new ResponseEntity<>(updated, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('delete:item_unit')")
     public ResponseEntity<Void> deleteUnit(@PathVariable UUID id) {
         itemUnitAdapter.deleteUnit(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/availability")
+    @PreAuthorize("hasAuthority('read:item_unit')")
     public ResponseEntity<List<ItemUnitAvailabilityDto>> getUnitsAvailability(@RequestParam List<UUID> unitIds,
                                                                               @RequestParam String pickup,
                                                                               @RequestParam Integer durationDays) {

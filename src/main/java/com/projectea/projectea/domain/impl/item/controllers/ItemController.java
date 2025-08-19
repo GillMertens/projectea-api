@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class ItemController {
     private final ItemAdapter itemAdapter;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('read:item')")
     public ResponseEntity<List<ItemDto>> getItems(@RequestParam(required = false) String category) {
         List<ItemDto> items = (category == null || category.isBlank())
                 ? itemAdapter.getAllItemsDto()
@@ -35,24 +37,28 @@ public class ItemController {
     }
 
     @GetMapping(value = "/{id}")
+    @PreAuthorize("hasAuthority('read:item')")
     public ResponseEntity<ItemDto> getItemById(@PathVariable Long id) {
         ItemDto item = itemAdapter.getItemByIdDto(id);
         return item != null ? new ResponseEntity<>(item, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('create:item')")
     public ResponseEntity<ItemDto> createItem(@RequestBody Item item) {
         ItemDto created = itemAdapter.createItemDto(item);
         return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/{id}")
+    @PreAuthorize("hasAuthority('update:item')")
     public ResponseEntity<ItemDto> updateItem(@PathVariable Long id, @RequestBody Item item) {
         ItemDto updated = itemAdapter.updateItemDto(id, item);
         return updated != null ? new ResponseEntity<>(updated, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasAuthority('delete:item')")
     public ResponseEntity<Void> deleteItem(@PathVariable Long id) {
         itemAdapter.deleteItem(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

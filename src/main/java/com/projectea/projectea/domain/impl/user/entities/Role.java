@@ -14,12 +14,20 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public enum Role {
 
-    USER(Collections.emptySet()),
+    USER(Set.of(
+        Permission.READ_ITEM,
+        Permission.READ_ITEM_UNIT,
+        Permission.READ_CATEGORY,
+        Permission.CREATE_RESERVATION,
+        Permission.READ_RESERVATION,
+        Permission.UPDATE_RESERVATION
+    )),
 
     ADMIN(
         Set.of(
             Permission.CREATE_RESERVATION,
             Permission.READ_RESERVATION,
+            Permission.READ_ALL_RESERVATIONS,
             Permission.UPDATE_RESERVATION,
             Permission.DELETE_RESERVATION,
             Permission.CREATE_USER,
@@ -30,7 +38,17 @@ public enum Role {
             Permission.READ_ADDRESS,
             Permission.UPDATE_ADDRESS,
             Permission.DELETE_ADDRESS,
-            Permission.CREATE_ITEM
+            Permission.CREATE_ITEM,
+            Permission.READ_ITEM,
+            Permission.UPDATE_ITEM,
+            Permission.DELETE_ITEM,
+            Permission.CREATE_ITEM_UNIT,
+            Permission.READ_ITEM_UNIT,
+            Permission.UPDATE_ITEM_UNIT,
+            Permission.DELETE_ITEM_UNIT,
+            Permission.READ_CATEGORY,
+            Permission.CREATE_CATEGORY,
+            Permission.DELETE_CATEGORY
         )
     );
 
