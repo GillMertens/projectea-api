@@ -19,6 +19,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthenticationManager authenticationManager;
 
+    /**
+     * Authenticates a user with email and password, then generates a JWT token.
+     * 
+     * @param request The login request containing email and password
+     * @return AuthenticationResponse containing the JWT token
+     * @throws org.springframework.security.core.AuthenticationException if authentication fails
+     */
     @Override
     public AuthenticationResponse login(LoginRequest request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
@@ -29,6 +36,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             .build();
     }
 
+    /**
+     * Registers a new user with the provided information and generates a JWT token.
+     * Validates that the email is not already in use before creating the user.
+     * 
+     * @param request The registration request containing user details
+     * @return AuthenticationResponse containing the JWT token
+     * @throws EmailAlreadyExistsException if the email is already registered
+     */
     @Override
     public AuthenticationResponse register(RegisterRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {

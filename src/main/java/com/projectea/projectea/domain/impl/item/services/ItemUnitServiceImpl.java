@@ -49,6 +49,15 @@ public class ItemUnitServiceImpl implements ItemUnitService {
         itemUnitRepository.deleteById(id);
     }
 
+    /**
+     * Determines which units are available for reservation within a specified time window.
+     * Filters out units that have overlapping reservations during the requested period.
+     * 
+     * @param unitIds List of unit UUIDs to check availability for
+     * @param pickupDate Start date of the requested reservation period
+     * @param returnDate End date of the requested reservation period
+     * @return List of available ItemUnits that can be reserved during the specified period
+     */
     @Override
     public List<ItemUnit> getUnitsAvailability(List<UUID> unitIds, LocalDateTime pickupDate, LocalDateTime returnDate) {
         List<ItemUnit> units = unitIds.stream()

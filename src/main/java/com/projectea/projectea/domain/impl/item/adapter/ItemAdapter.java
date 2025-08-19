@@ -22,6 +22,13 @@ public class ItemAdapter {
     private final ItemService itemService;
     private final ModelMapper modelMapper;
 
+    /**
+     * Configures ModelMapper mappings for Item entity to ItemDto conversion.
+     * Sets up custom converters for:
+     * - Category entity to category ID
+     * - Set of ItemUnits to List of ItemUnitSummaryDto
+     * - List of ItemImages to List of image URLs
+     */
     @PostConstruct
     public void configureMappings() {
         Converter<Category, Long> categoryToId = ctx -> ctx.getSource() == null ? null : ctx.getSource().getId();

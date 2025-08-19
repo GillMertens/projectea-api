@@ -51,6 +51,16 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(exceptionResponse, HttpStatus.FORBIDDEN);
     }
 
+    /**
+     * Handles validation errors from @Valid annotations on controller methods.
+     * Extracts field-specific error messages and returns them in a structured format.
+     * 
+     * @param ex The validation exception containing binding errors
+     * @param headers HTTP headers
+     * @param status HTTP status code
+     * @param request The web request
+     * @return ResponseEntity with field-specific error messages
+     */
     @Override
     protected @NotNull ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex,
@@ -71,6 +81,14 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * Logs error details and returns a standardized error response.
+     * 
+     * @param throwable The exception that occurred
+     * @param status The HTTP status code to return
+     * @param request The HTTP request that caused the error
+     * @return ResponseEntity with error details
+     */
     private ResponseEntity<ExceptionResponse> logAndReturnError(Throwable throwable, HttpStatus status, HttpServletRequest request) {
         log.error("[Error] {} {} - with message: {}", request.getMethod(), request.getServletPath(), throwable.getMessage());
         log.debug("Stack trace: ", throwable);

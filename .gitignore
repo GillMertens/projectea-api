@@ -35,3 +35,7 @@ src/main/resources/static/Assignment/Assignment
 
 ### Docker volume ###
 /data/
+
+
+/codebase.txt
+.env

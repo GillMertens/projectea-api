@@ -11,6 +11,7 @@ import com.projectea.projectea.domain.impl.item.entities.ItemUnit;
 import com.projectea.projectea.domain.impl.item.entities.Item;
 import com.projectea.projectea.domain.impl.user.repositories.UserRepository;
 import com.projectea.projectea.domain.impl.user.entities.User;
+import com.projectea.projectea.domain.impl.item.DTO.ItemUnitSummaryDto;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -74,6 +75,14 @@ public class ReservationAdapter {
         return updated != null ? toDto(updated) : null;
     }
 
+    /**
+     * Builds a Reservation entity from a ReservationCreateDto.
+     * Parses pickup date, calculates return date based on duration, and fetches associated units.
+     * Duration is clamped between 1 and 7 days.
+     * 
+     * @param dto The DTO containing reservation creation data
+     * @return Built Reservation entity
+     */
     private Reservation buildReservationFromDto(ReservationCreateDto dto) {
         Reservation reservation = new Reservation();
         User user = userRepository.findById(dto.getUserId()).orElse(null);
@@ -102,6 +111,13 @@ public class ReservationAdapter {
         return reservation;
     }
 
+    /**
+     * Converts a Reservation entity to ReservationResponseDto.
+     * Groups units by their parent item and maps them to ItemDto objects for frontend display.
+     * 
+     * @param reservation The reservation entity to convert
+     * @return ReservationResponseDto with grouped items and their units
+     */
     private ReservationResponseDto toDto(Reservation reservation) {
         ReservationResponseDto dto = mm.map(reservation, ReservationResponseDto.class);
         if (reservation.getUnits() == null || reservation.getUnits().isEmpty()) {
@@ -116,7 +132,7 @@ public class ReservationAdapter {
                     List<ItemUnit> units = entry.getValue();
                     ItemDto dtoItem = mm.map(item, ItemDto.class);
                     dtoItem.setUnits(units.stream()
-                            .map(u -> mm.map(u, com.projectea.projectea.domain.impl.item.DTO.ItemUnitSummaryDto.class))
+                            .map(u -> mm.map(u, ItemUnitSummaryDto.class))
                             .collect(Collectors.toList()));
                     return dtoItem;
                 })

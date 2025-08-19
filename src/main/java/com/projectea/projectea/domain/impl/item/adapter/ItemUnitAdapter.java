@@ -57,6 +57,15 @@ public class ItemUnitAdapter {
         itemUnitService.deleteUnit(id);
     }
 
+    /**
+     * Determines availability status for a list of item units within a specified time window.
+     * Checks for overlapping reservations and calculates the latest return date for each unit.
+     * 
+     * @param unitIds List of unit UUIDs to check availability for
+     * @param pickupDate Start date of the requested reservation period
+     * @param returnDate End date of the requested reservation period
+     * @return List of ItemUnitAvailabilityDto containing availability status and reservation end dates
+     */
     public List<ItemUnitAvailabilityDto> getUnitsAvailabilityDto(List<UUID> unitIds, LocalDateTime pickupDate, LocalDateTime returnDate) {
         List<ItemUnit> availableUnits = itemUnitService.getUnitsAvailability(unitIds, pickupDate, returnDate);
         

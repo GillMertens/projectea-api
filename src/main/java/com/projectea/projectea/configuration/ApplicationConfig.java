@@ -19,12 +19,22 @@ public class ApplicationConfig {
 
     private final UserRepository userRepository;
 
+    /**
+     * Creates a UserDetailsService that loads users by email from the repository.
+     * 
+     * @return UserDetailsService implementation that throws UsernameNotFoundException if user not found
+     */
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
+    /**
+     * Configures the authentication provider with user details service and password encoder.
+     * 
+     * @return Configured DaoAuthenticationProvider
+     */
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();

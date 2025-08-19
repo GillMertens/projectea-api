@@ -28,6 +28,14 @@ public class JwtTokenProvider {
         return getClaimFromToken(token, Claims::getSubject);
     }
 
+    /**
+     * Extracts a specific claim from a JWT token using a provided resolver function.
+     * 
+     * @param token The JWT token to extract claims from
+     * @param resolver Function to extract the specific claim from Claims object
+     * @param <T> The type of the claim to extract
+     * @return The extracted claim value
+     */
     public <T> T getClaimFromToken(String token, Function<Claims, T> resolver) {
         return resolver.apply(getAllClaimsFromToken(token));
     }
@@ -36,6 +44,14 @@ public class JwtTokenProvider {
         return generateToken(new HashMap<>(), userDetails);
     }
 
+    /**
+     * Generates a JWT token with custom claims and user details.
+     * Token expires after 10 hours from creation.
+     * 
+     * @param claims Additional claims to include in the token
+     * @param userDetails User details to extract username from
+     * @return The generated JWT token string
+     */
     public String generateToken(Map<String, Object> claims, UserDetails userDetails) {
         return Jwts.builder()
                 .claims(claims)
@@ -46,6 +62,13 @@ public class JwtTokenProvider {
                 .compact();
     }
 
+    /**
+     * Validates a JWT token by checking if the username matches and the token is not expired.
+     * 
+     * @param token The JWT token to validate
+     * @param userDetails User details to compare against
+     * @return true if the token is valid, false otherwise
+     */
     public boolean validateToken(String token, UserDetails userDetails) {
         String username = getUsername(token);
         return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
