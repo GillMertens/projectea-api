@@ -3,6 +3,7 @@ package com.projectea.projectea.domain.impl.reservation.adapter;
 import com.projectea.projectea.domain.impl.reservation.DTO.ReservationResponseDto;
 import com.projectea.projectea.domain.impl.item.DTO.ItemDto;
 import com.projectea.projectea.domain.impl.reservation.entities.Reservation;
+import com.projectea.projectea.domain.impl.reservation.entities.ReservationStatus;
 import com.projectea.projectea.domain.impl.reservation.services.ReservationService;
 import com.projectea.projectea.domain.impl.reservation.DTO.ReservationCreateDto;
 import com.projectea.projectea.domain.impl.item.repositories.ItemUnitRepository;
@@ -62,6 +63,7 @@ public class ReservationAdapter {
 
     public ReservationResponseDto createReservationFromDto(ReservationCreateDto dto) {
         Reservation reservation = buildReservationFromDto(dto);
+        reservation.setStatus(ReservationStatus.PENDING);
         Reservation created = reservationService.createReservation(reservation);
         return toDto(created);
     }
